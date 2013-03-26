@@ -2,12 +2,9 @@
 {
     public class Constants
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        public static readonly int BUFSIZE = 65535;
+        public static readonly int Bufsize = 65535;
 
-        public static readonly string TestInputInstruction = @"++++++++++[>++++++>++++++++<<-]>+++++..>+++.<+++++ ++.+.>.<-.";
+        public static readonly string TestInputInstruction = @"+++++++,+++[>++++++>++++++++<<-]>+++++..>+++.<+++++ ++.+.>.<-."; // AASHISH
 
     }
 }

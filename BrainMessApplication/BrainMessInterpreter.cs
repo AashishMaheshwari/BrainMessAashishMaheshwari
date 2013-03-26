@@ -6,21 +6,21 @@ namespace BrainMessApplication
     public class BrainMessInterpreter
     {
 
-        private int[] buffer = new int[Constants.BUFSIZE];
-        public int pointer { get; set; }
+        private readonly int[] buffer = new int[Constants.Bufsize];
+        public int Pointer { get; set; }
 
         public BrainMessInterpreter()
         {
-            this.pointer = 0;
+            this.Pointer = 0;
         }
 
-        public void Interpret(string bmInstruction)
+        public void Interpret(string bmInstruction,bool isUnitTest)
         {
             int i = 0;
-            int inputLength = bmInstruction.Length;
+            int inputInstructionLength = bmInstruction.Length;
             try
             {
-                while (i < inputLength)
+                while (i < inputInstructionLength)
                 {
                     switch (bmInstruction[i])
                     {
@@ -51,7 +51,7 @@ namespace BrainMessApplication
                             }
                         case (char)Enums.Instruction.BeginLoop:
                             {
-                                if (this.buffer[this.pointer] == 0)
+                                if (this.buffer[this.Pointer] == 0)
                                 {
                                     int loop = 1;
                                     while (loop > 0)
@@ -69,7 +69,6 @@ namespace BrainMessApplication
                                             }
                                     }
                                 }
-                                
                                 break;
                             }
                         case (char)Enums.Instruction.EndLoop:
@@ -95,70 +94,87 @@ namespace BrainMessApplication
                         case (char)Enums.Instruction.Input:
                             {
                                 // read a key from console..
-                                Input();
+                                Input(isUnitTest,i);
                                 break;
                             }
                     }
 
                     i++;
                 }
-
+            
                 Console.Read();
             }
             catch (Exception e)
             {
                 Console.WriteLine("Error occured." + e);
+                Console.ReadLine();
             }
         }
 
         public void IncrementAddress()
         {
-            this.pointer++;
-            if (this.pointer >= Constants.BUFSIZE)
+            this.Pointer++;
+            if (this.Pointer >= Constants.Bufsize)
             {
-                this.pointer = 0;
+                this.Pointer = 0;
             }
         }
 
         public void DecrementAddress()
         {
-            this.pointer--;
-            if (this.pointer < 0)
+            this.Pointer--;
+            if (this.Pointer < 0)
             {
-                this.pointer = Constants.BUFSIZE - 1;
+                this.Pointer = Constants.Bufsize - 1;
             }
         }
 
         public void IncrementValue()
         {
-            this.buffer[this.pointer]++;
+            this.buffer[this.Pointer]++;
         }
 
         public void DecrementValue()
         {
-            this.buffer[this.pointer]--;
+            this.buffer[this.Pointer]--;
         }
 
         public void Output()
         {
-            Console.Write((char)this.buffer[this.pointer]);
+            Console.Write((char)this.buffer[this.Pointer]);
         }
 
-        public void Input()
+        public void Input(bool isUnitTest,int currentIndex )
         {
-            ConsoleKeyInfo key = Console.ReadKey();
-            this.buffer[this.pointer] = (int)key.KeyChar;
+            if (isUnitTest)
+            {
+                Console.WriteLine((char)this.buffer[currentIndex]);
+                Console.ReadLine();
+            }
+            else
+            {
+                ConsoleKeyInfo key = Console.ReadKey();
+                this.buffer[this.Pointer] = (int)key.KeyChar;
+            }
         }
-
-
 
         public static void Main(string[] isUnitTest)
         {
+            bool isTest = false;
             BrainMessInterpreter bmInterpreter = new BrainMessInterpreter();
             string userInput = Console.ReadLine();
-            if (isUnitTest[0]=="true")
+            if (isUnitTest.Length > 0 && isUnitTest[0] == "true")
+            {
                 userInput = Constants.TestInputInstruction;
-            bmInterpreter.Interpret(userInput);
+                isTest = true;
+            }
+            if (!string.IsNullOrEmpty(userInput))
+                bmInterpreter.Interpret(userInput,isTest);
+            else
+            {
+                Console.WriteLine("Sorry! Please enter the brainmess instructions.");
+                Console.ReadLine();
+            }
         }
     }
 }

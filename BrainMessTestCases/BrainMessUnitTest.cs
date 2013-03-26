@@ -11,12 +11,8 @@ namespace BrainMessTestCases
         public void TestIncrementAddress()
         {
             BrainMessInterpreter objBrainMessInterpreter = new BrainMessInterpreter();
-            //objBrainMessInterpreter.IncrementAddress();
-            //objBrainMessInterpreter.IncrementAddress();
-            //objBrainMessInterpreter.DecrementAddress();
-
             objBrainMessInterpreter.IncrementAddress();
-            Assert.AreEqual(1,objBrainMessInterpreter.pointer);
+            Assert.AreEqual(1, objBrainMessInterpreter.Pointer);
         }
 
         [TestMethod]
@@ -27,10 +23,7 @@ namespace BrainMessTestCases
             objBrainMessInterpreter.DecrementAddress();
             objBrainMessInterpreter.IncrementAddress();
             objBrainMessInterpreter.IncrementAddress();
-            Assert.AreEqual(1, objBrainMessInterpreter.pointer);
-
-            //objBrainMessInterpreter.DecrementAddress();
-            //Assert.AreEqual(65534, objBrainMessInterpreter.pointer);
+            Assert.AreEqual(1, objBrainMessInterpreter.Pointer);
         }
 
         [TestMethod]
@@ -39,7 +32,7 @@ namespace BrainMessTestCases
             BrainMessInterpreter objBrainMessInterpreter = new BrainMessInterpreter();
 
             objBrainMessInterpreter.IncrementValue();
-            Assert.AreEqual(1, objBrainMessInterpreter.pointer+1);
+            Assert.AreEqual(1, objBrainMessInterpreter.Pointer + 1);
         }
 
         [TestMethod]
@@ -48,7 +41,7 @@ namespace BrainMessTestCases
             BrainMessInterpreter objBrainMessInterpreter = new BrainMessInterpreter();
 
             objBrainMessInterpreter.DecrementValue();
-            Assert.AreEqual(-1, objBrainMessInterpreter.pointer-1);
+            Assert.AreEqual(-1, objBrainMessInterpreter.Pointer - 1);
         }
 
         [TestMethod]
@@ -58,22 +51,16 @@ namespace BrainMessTestCases
             string[] array = new string[1];
             array[0] = "true";
             BrainMessInterpreter.Main(array);
-
-            //objBrainMessInterpreter.IncrementAddress();
-            //objBrainMessInterpreter.Output();
-            //Assert.AreEqual(1, objBrainMessInterpreter.pointer);
         }
 
         [TestMethod]
         public void TestInput()
         {
             BrainMessInterpreter objBrainMessInterpreter = new BrainMessInterpreter();
-            
-            objBrainMessInterpreter.Input();
-            Assert.AreEqual(1, objBrainMessInterpreter.pointer);
+            string[] array = new string[1];
+            array[0] = "true";
+            BrainMessInterpreter.Main(array);
         }
-
-
-
+        
     }
 }
